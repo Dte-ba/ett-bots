@@ -25,7 +25,7 @@ execute() {
   # init the drbl
   if !(restore_init)
   then
-    echo_error "Trying to initialize the drbl"
+    echo_error "Tratando de iniciar drbl"
     exit 1
   fi
 
@@ -35,63 +35,63 @@ execute() {
       "CREATE_TABLE")
         if !(create_table)
         then
-          echo_error "Trying to create the partition table on $DISK_FULLNAME"
+          echo_error "Tratando de crear tabla de particiones en $DISK_FULLNAME"
           exit 1
         fi
       ;;
       "CREATE_PARTITIONS")
         if !(create_partitions)
         then
-          echo_error "Trying to create partitions on $DISK_FULLNAME"
+          echo_error "Tratando particiones en $DISK_FULLNAME"
           exit 1
         fi
       ;;
       "RESTORE_RECU")
         if !(restore_recu)
         then
-          echo_error "Restoring Recovery partition on $DISK_FULLNAME"
+          echo_error "Restaurando particion de recuperacion en $DISK_FULLNAME"
           exit 1
         fi
       ;;
       "RESTORE_DATA")
         if !(restore_data)
         then
-          echo_error "Restoring Data partition on $DISK_FULLNAME"
+          echo_error "Restaurando particion de Datos en $DISK_FULLNAME"
           exit 1
         fi
       ;;
       "MOUNT")
         if !(mount_partitions)
         then
-          echo_error "Mounting Partitions"
+          echo_error "Montando particiones"
           exit 1
         fi
       ;;
       "COPY_IMG_GNU")
         if !(copy_img_gnu)
         then
-          echo_error "Coping GNU image"
+          echo_error "Copiando imagen GNU/Linux"
           exit 1
         fi
       ;;
       "COPY_IMG_WIN")
         if !(copy_img_win)
         then
-          echo_error "Coping WIN image"
+          echo_error "Copiando imagen Windows"
           exit 1
         fi
       ;;
       "RESTORE_GNU")
         if !(restore_gnu)
         then
-          echo_error "Restoring GNU image"
+          echo_error "Restaurando imagen GNU/Linux"
           exit 1
         fi
       ;;
       "RESTORE_WIN")
         if !(restore_win)
         then
-          echo_error "Restoring WIN image"
+          echo_error "Restaurando imagen Windows"
           #exit 1
         fi
       ;;

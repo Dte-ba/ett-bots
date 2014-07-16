@@ -50,7 +50,7 @@ create_table(){
     return 1
   fi
 
-  echo_ok "Partition table created on $DISK_FULLNAME"
+  echo_ok "Tabla de particiones creada $DISK_FULLNAME"
 }
 
 create_partitions(){
@@ -87,29 +87,29 @@ create_partitions(){
  # WIN
  if (parted_mkpart_mb "$disk" "$from" "$to" "primary" "ntfs" "WIN" )
  then
-  echo_ok "$disk was created successfully"
+  echo_ok "$disk fue creado correctamente"
  else
-  echo_error "$disk creation fail"
+  echo_error "fallo en la creacion de $disk"
   return 1
  fi
 
- from=$(( $to + 1 ))
+ from=$(( $to ))
  to=$(( $from + ${sizes[$IDX_GNU]} ))
  disk="${DISK}2"
 
  # GNU
  if (parted_mkpart_mb "$disk" "$from" "$to" "primary" "ext4" "GNU" )
  then
-  echo_ok "$disk was created successfully"
+  echo_ok "$disk fue creado correctamente"
  else
-  echo_error "$disk creation fail"
+  echo_error "fallo en la creacion de $disk"
   return 1
  fi
 
  # save point
- local fromlogic=$(($to+1))
+ local fromlogic=$(($to))
 
- from=$(($to+1))
+ from=$(($to))
  to=$(($from+${sizes[$IDX_EXT]}))
 
  # save point
@@ -120,9 +120,9 @@ create_partitions(){
 
  if (parted_mkpart_mb "$disk" "$from" "$to" "extended")
  then
-  echo_ok "$disk was created successfully"
+  echo_ok "$disk fue creado correctamente"
  else
-  echo_error "$$diskcreation fail"
+  echo_error "fallo en la creacion de $disk"
   return 1
  fi
 
@@ -133,28 +133,28 @@ local torec=$(($fromrec+${sizes[$IDX_RECOVERY]}))
  # logical partition
 
  # SWAP
- from=$fromlogic
+ from=$(($fromlogic+1))
  to=$(($from+${sizes[$IDX_SWAP]}))
  disk="${DISK}5"
 
  if (parted_mkpart_mb "$disk" "$from" "$to" "logical" "linux-swap" )
  then
-  echo_ok "$disk was created successfully"
+  echo_ok "$disk fue creado correctamente"
  else
-  echo_error "$disk creation fail"
+  echo_error "fallo en la creacion de $disk"
   return 1
  fi
 
  # DATA
  from=$(( $to+1 ))
- to=$(($from+${sizes[$IDX_DATA]}))
+ to=$(($from+${sizes[$IDX_DATA]-1}))
  disk="${DISK}6"
 
  if (parted_mkpart_mb "$disk" "$from" "$toext" "logical" "ntfs" "DATA" )
  then
-  echo_ok "$disk was created successfully"
+  echo_ok "$disk fue creado correctamente"
  else
-  echo_error "$disk creation fail"
+  echo_error "fallo en la creacion de $disk"
   return 1
  fi
 
@@ -163,7 +163,7 @@ local torec=$(($fromrec+${sizes[$IDX_RECOVERY]}))
 
  if (parted_mkpart_mb "$disk" "$fromrec" "$smb" "primary" "ext4" "RECOVERY")
  then
-  echo_ok "$disk was created successfully"
+  echo_ok "$disk fue creado correctamente"
 
   if (parted_set_boot "$DISK" "4")
   then
@@ -174,9 +174,9 @@ local torec=$(($fromrec+${sizes[$IDX_RECOVERY]}))
   fi
 
  else
-  echo_error "$disk creation fail"
+  echo_error "fallo en la creacion de $disk"
   return 1
  fi
 
- echo_ok "Partitions ${DISK}1 ${DISK}2 { ${DISK}5 ${DISK}6 } ${DISK}4 created successfully"
+ echo_ok "Particiones ${DISK}1 ${DISK}2 { ${DISK}5 ${DISK}6 } ${DISK}4 creadas correctamente"
 }

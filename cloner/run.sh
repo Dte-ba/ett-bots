@@ -9,8 +9,10 @@ if [ "$UID" -ne 0 ] ; then
 fi
 
 echo ""
-echo -e " \e[94mHi there i'm an ETT bot i belong to Dte-ba bot army, my job is help you to clone some netbooks.\e[39m"
-echo -e " \e[94mIf you find BUGS please report them on https://github.com/Dte-ba/ett-bots/issues\e[39m"
+#echo -e " \e[94mHi there i'm an ETT bot i belong to Dte-ba bot army, my job is help you to clone some netbooks.\e[39m"
+echo -e " \e[94mHola! Soy un ETT bot, estoy aquí para ayudarte a clonar algunas netbooks.\e[39m"
+#echo -e " \e[94mIf you find BUGS please report them on https://github.com/Dte-ba/ett-bots/issues\e[39m"
+echo -e " \e[94mSi encuentras errores puedes reportarlos en https://github.com/Dte-ba/ett-bots/issues\e[39m"
 echo ""
 
 # define the lib path
@@ -43,6 +45,7 @@ if [[ -z "$DISK" ]]; then
   then
     DISK=$1
   else
+    echo "Seleccione un disco para clonar:"
     select sdisk in `hd_list`
     do
       DISK=$sdisk
@@ -66,29 +69,29 @@ then
       exit 0
     else
       echo ""
-      echo -e " \e[91mWARNING: \e[39m ALL DATA on $DISK_FULLNAME WILL BE LOST"
+      echo -e " \e[91mWARNING: \e[39m TODA LA INFORMACIÓN EN $DISK_FULLNAME SERÁ ELIMANDA"
       echo ""
-      read -p " Continue? [y/N]" promp
+      read -p " Continuar? [s/N]" promp
 
-      if [[ "$promp" = "y" ]]
+      if [[ "$promp" = "s" ]]
       then
         if (execute "${TASKS[*]}")
         then
           echo ""
-          echo " Bye! ;)"
+          echo " Hasta luego! ;)"
           echo ""
           exit 0
         else
           echo ""
-          echo " :S Oops! Something wrong!"
-          echo " See the log $LOGS"
-          echo " You can report the error on https://github.com/Dte-ba/ett-bots/issues"
+          echo " :S Oops! Algo a salido mal!"
+          echo " Mira los logs $LOGS"
+          echo " Puedes reportar el error en https://github.com/Dte-ba/ett-bots/issues"
           echo ""
           exit 1
         fi
       else
         echo ""
-        echo " Bye! ;)"
+        echo " Hasta luego! ;)"
         echo ""
         exit 0
       fi
@@ -96,13 +99,13 @@ then
     fi
 
   else
-    echo_error "the disk $DISK not exists"
+    echo_error "El disco $DISK no existe"
     exit 1
   fi
 
 else
-  echo_error "Unknown disk"
-  echo " I need a disk name into the first parameter or into config.sh"
+  echo_error "Disco desconosido"
+  echo " Necesito un nombre de disco en el primer parametro o en config.sh"
   echo ""
   exit 1
 fi

@@ -14,7 +14,8 @@ restore_init(){
   # bind the live image repository
   log "Mounting the live-image point"
   log "mount --bind /mnt/home/images/ /home/partimag/"
-  mount --bind /mnt/home/images/ /home/partimag/
+  echo $IMAGES_SOURCE
+  mount --bind $IMAGES_SOURCE /home/partimag/
 }
 
 restore_part(){
@@ -33,11 +34,10 @@ restore_data(){
 }
 
 mount_partitions(){
-
   IMAGES_POINT="/home/rdisk/home/partimag"
 
   mkdir -p /home/rdisk/
-  mount /dev/${ROOT_DISK}4 /home/rdisk/
+  mount /dev/${DISK}4 /home/rdisk/
   mkdir -p $IMAGES_POINT
 
   mount --bind $IMAGES_POINT /home/partimag/
@@ -48,20 +48,20 @@ mount_partitions(){
 
 copy_img_gnu(){
  rsync -ah --progress ${IMAGES_SOURCE}${GNU_IMG_NAME} /home/partimag
- echo_ok "GNU image copied" 
+ echo_ok "Imagen GNU/Linux copiada" 
 }
 
 copy_img_win(){
-  rsync -ah --progress ${IMAGES_SOURCE}${WIN_IMG_NAME} /home/partimag
- echo_ok "WIN image copied"
+ rsync -ah --progress ${IMAGES_SOURCE}${WIN_IMG_NAME} /home/partimag
+ echo_ok "Imagen Windows copiada"
 }
 
 restore_gnu(){
  restore_part "$GNU_IMG_NAME" "${DISK}2"
- echo_ok "GNU image restored"
+ echo_ok "imagen de GNU/Linux restaurada"
 }
 
 restore_win(){
  restore_part "$WIN_IMG_NAME" "${DISK}1"
- echo_ok "WIN image restored"
+ echo_ok "Imange de Windows restaurada"
 }

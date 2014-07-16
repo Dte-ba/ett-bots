@@ -18,10 +18,14 @@ parted_mkpart_mb(){
   local pnumber=$( echo $disk | sed -r 's/[a-zA-Z]+//' )
 
   dname="/dev/${dname}"
-
+  
+  # echo $dname $from $to
+  
+  # return 0
+  
   if [[ "$mode" = "primary" ]] || [[ "$mode" = "logical" ]]; then
-    log "parted -a cylinder $dname --script -- unit MiB mkpart $mode $typee $from $to"
-    parted -a cylinder $dname --script -- unit MiB mkpart $mode $typee $from $to >> $LOGS
+    log "parted -a optimal $dname --script -- unit MiB mkpart $mode $typee $from $to"
+    parted -a optimal $dname --script -- unit MiB mkpart $mode $typee $from $to >> $LOGS
 
     case $typee in
       "ntfs")
@@ -43,8 +47,8 @@ parted_mkpart_mb(){
     esac
 
   else
-    log "parted -a cylinder $dname --script -- unit MiB mkpart extended $from $to"
-    parted -a cylinder $dname --script -- unit MiB mkpart extended $from $to >> $LOGS
+    log "parted -a optimal $dname --script -- unit MiB mkpart extended $from $to"
+    parted -a optimal $dname --script -- unit MiB mkpart extended $from $to >> $LOGS
   fi
 }
 
