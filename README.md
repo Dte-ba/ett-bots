@@ -1,6 +1,6 @@
-# ETT bots army
+# cloner
 
-Bots soldiers to helps humans ETTs
+Shell scripts para el clonado de imágenes en diferentes arquitecturas de hardware.
 
 ## Licencia
 
